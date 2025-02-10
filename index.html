@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Investment Form</title>
+</head>
+<body>
+    <h2>Investment Advice Form</h2>
+    <form id="investmentForm">
+        Name: <input type="text" id="name"><br>
+        Salary: <input type="number" id="salary"><br>
+        Expenditure: <input type="number" id="expenditure"><br>
+        <button type="submit">Submit</button>
+    </form>
+    <p id="response"></p>
+
+    <script>
+        document.getElementById('investmentForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const salary = document.getElementById('salary').value;
+            const expenditure = document.getElementById('expenditure').value;
+
+            const response = await fetch('https://your-api-gateway-url.amazonaws.com/investment', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, salary, expenditure })
+            });
+
+            const data = await response.json();
+            document.getElementById('response').innerText = data.advice;
+        });
+    </script>
+</body>
+</html>
